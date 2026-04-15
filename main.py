@@ -33,6 +33,8 @@ from fastapi import FastAPI, HTTPException, Query, Request
 from fastapi.responses import JSONResponse, StreamingResponse
 
 import analyzer
+import db
+import notifier
 
 load_dotenv()
 
@@ -43,6 +45,11 @@ app = FastAPI(
     description="Webhook server that analyzes TradingView alerts with Claude AI.",
     version="1.0.0",
 )
+
+
+@app.on_event("startup")
+async def startup():
+    db.init()
 
 
 def _verify_secret(token: str | None) -> None:
@@ -68,7 +75,13 @@ async def _parse_body(request: Request) -> dict | str:
 @app.get("/health")
 async def health():
     """Liveness check."""
-    return {"status": "ok"}
+    return {"status": "ok", "mock_mode": analyzer.MOCK_MODE}
+
+
+@app.get("/alerts")
+async def list_alerts(limit: int = 20):
+    """Return the most recent stored alerts and their analyses."""
+    return {"alerts": db.recent(limit)}
 
 
 @app.post("/webhook")
@@ -77,10 +90,7 @@ async def webhook(
     token: str | None = Query(default=None),
 ):
     """
-    Receive a TradingView alert and return Claude's analysis as JSON.
-
-    TradingView expects a 2xx response quickly, so this is synchronous.
-    For long-running analysis, prefer /webhook/stream.
+    Receive a TradingView alert, analyze with Claude, store it, and notify.
     """
     _verify_secret(token)
     alert_data = await _parse_body(request)
@@ -88,15 +98,15 @@ async def webhook(
     if not alert_data:
         raise HTTPException(status_code=400, detail="Empty alert payload")
 
-    analysis = analyzer.analyze(alert_data)
+    try:
+        analysis = analyzer.analyze(alert_data)
+    except EnvironmentError as e:
+        raise HTTPException(status_code=503, detail=str(e))
 
-    return JSONResponse(
-        {
-            "status": "ok",
-            "alert": alert_data,
-            "analysis": analysis,
-        }
-    )
+    record_id = db.save(alert_data, analysis)
+    notifier.send(alert_data, analysis)
+
+    return JSONResponse({"status": "ok", "id": record_id, "alert": alert_data, "analysis": analysis})
 
 
 @app.post("/webhook/stream")
@@ -106,9 +116,7 @@ async def webhook_stream(
 ):
     """
     Receive a TradingView alert and stream Claude's analysis as Server-Sent Events.
-
-    Use this endpoint when you want to display the analysis token-by-token
-    in a dashboard or chatbot UI.
+    Stores the full result in the DB once streaming completes.
     """
     _verify_secret(token)
     alert_data = await _parse_body(request)
@@ -117,11 +125,20 @@ async def webhook_stream(
         raise HTTPException(status_code=400, detail="Empty alert payload")
 
     def event_stream():
-        # Send alert data first so the client knows what's being analyzed
+        chunks = []
         yield f"data: {json.dumps({'type': 'alert', 'data': alert_data})}\n\n"
-        for chunk in analyzer.stream_analyze(alert_data):
-            yield f"data: {json.dumps({'type': 'text', 'text': chunk})}\n\n"
-        yield "data: [DONE]\n\n"
+        try:
+            for chunk in analyzer.stream_analyze(alert_data):
+                chunks.append(chunk)
+                yield f"data: {json.dumps({'type': 'text', 'text': chunk})}\n\n"
+        except EnvironmentError as e:
+            yield f"data: {json.dumps({'type': 'error', 'detail': str(e)})}\n\n"
+            yield "data: [DONE]\n\n"
+            return
+        full_analysis = "".join(chunks)
+        record_id = db.save(alert_data, full_analysis)
+        notifier.send(alert_data, full_analysis)
+        yield f"data: {json.dumps({'type': 'done', 'id': record_id})}\n\n"
 
     return StreamingResponse(event_stream(), media_type="text/event-stream")
 
@@ -129,8 +146,7 @@ async def webhook_stream(
 @app.post("/analyze")
 async def analyze_direct(request: Request):
     """
-    Directly submit an alert payload for analysis (no secret required).
-    Useful for testing from curl or a local dashboard.
+    Directly submit an alert for analysis. Useful for testing.
 
     Example:
         curl -X POST http://localhost:8000/analyze \\
@@ -141,8 +157,15 @@ async def analyze_direct(request: Request):
     if not alert_data:
         raise HTTPException(status_code=400, detail="Empty payload")
 
-    analysis = analyzer.analyze(alert_data)
-    return {"alert": alert_data, "analysis": analysis}
+    try:
+        analysis = analyzer.analyze(alert_data)
+    except EnvironmentError as e:
+        raise HTTPException(status_code=503, detail=str(e))
+
+    record_id = db.save(alert_data, analysis)
+    notifier.send(alert_data, analysis)
+
+    return {"id": record_id, "alert": alert_data, "analysis": analysis}
 
 
 if __name__ == "__main__":

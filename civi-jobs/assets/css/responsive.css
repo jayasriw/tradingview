@@ -1,0 +1,456 @@
+/* ============================================================
+   Responsive Styles — CiviJobs
+   ============================================================ */
+
+/* ---- XL: 1280px ---- */
+@media (max-width: 1280px) {
+    .container {
+        padding: 0 20px;
+    }
+
+    .dashboard-main {
+        padding: 24px;
+    }
+
+    .company-page-content {
+        grid-template-columns: 1fr 280px;
+    }
+}
+
+/* ---- LG: 1024px ---- */
+@media (max-width: 1024px) {
+    /* Homepage */
+    .hero .hero-title {
+        font-size: 2.25rem;
+    }
+
+    /* Jobs */
+    .jobs-layout {
+        grid-template-columns: 240px 1fr;
+        gap: 20px;
+    }
+
+    /* Companies */
+    .companies-layout {
+        grid-template-columns: 240px 1fr;
+    }
+
+    .company-page-content {
+        grid-template-columns: 1fr 260px;
+    }
+
+    /* Dashboard */
+    .dashboard-sidebar {
+        width: 220px;
+    }
+
+    /* Resume */
+    .resume-page {
+        grid-template-columns: 1fr 260px;
+    }
+
+    /* Map */
+    .map-layout {
+        flex-direction: column;
+    }
+
+    .map-sidebar-panel {
+        width: 100%;
+        max-height: 50vh;
+    }
+
+    .map-container {
+        height: 50vh;
+    }
+}
+
+/* ---- MD: 768px ---- */
+@media (max-width: 768px) {
+    /* Typography */
+    h1 { font-size: 1.75rem; }
+    h2 { font-size: 1.375rem; }
+
+    /* Header */
+    .site-header .nav-menu {
+        display: none;
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        background: #fff;
+        z-index: 9999;
+        flex-direction: column;
+        align-items: stretch;
+        padding: 80px 24px 24px;
+        overflow-y: auto;
+    }
+
+    .site-header .nav-menu.is-open {
+        display: flex;
+    }
+
+    .nav-menu .nav-item {
+        border-bottom: 1px solid var(--color-gray-100);
+    }
+
+    .nav-menu .nav-link {
+        padding: 16px 0;
+        font-size: 1.1rem;
+    }
+
+    .mobile-menu-toggle {
+        display: flex;
+    }
+
+    .header-actions .btn-outline {
+        display: none;
+    }
+
+    /* Hero */
+    .hero {
+        padding: 60px 0;
+    }
+
+    .hero .hero-title {
+        font-size: 1.875rem;
+    }
+
+    .hero .hero-subtitle {
+        font-size: 1rem;
+    }
+
+    .search-bar .search-form {
+        flex-direction: column;
+        border-radius: var(--radius-lg);
+    }
+
+    .search-bar .search-divider {
+        display: none;
+    }
+
+    .search-bar .search-field {
+        border-radius: var(--radius);
+        border: 1px solid var(--color-gray-300) !important;
+    }
+
+    .search-bar .search-btn {
+        border-radius: var(--radius);
+        width: 100%;
+    }
+
+    /* Jobs */
+    .jobs-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .filters-sidebar {
+        position: fixed;
+        top: 0;
+        left: 0;
+        right: 0;
+        bottom: 0;
+        z-index: 1000;
+        background: #fff;
+        overflow-y: auto;
+        transform: translateX(-100%);
+        transition: transform 0.3s ease;
+        padding: 80px 24px 24px;
+        box-shadow: 4px 0 20px rgba(0,0,0,.15);
+    }
+
+    .filters-sidebar.is-open {
+        transform: translateX(0);
+    }
+
+    .filter-toggle-btn {
+        display: flex;
+    }
+
+    .jobs-toolbar {
+        flex-wrap: wrap;
+        gap: 10px;
+    }
+
+    .jobs-count {
+        width: 100%;
+        order: -1;
+    }
+
+    /* Companies */
+    .companies-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .company-hero-content {
+        flex-direction: column;
+        align-items: flex-start;
+        top: -20px;
+    }
+
+    .company-hero-actions {
+        flex-direction: row;
+    }
+
+    .company-page-content {
+        grid-template-columns: 1fr;
+    }
+
+    .company-sidebar {
+        order: -1;
+    }
+
+    /* Resume */
+    .resume-page {
+        grid-template-columns: 1fr;
+    }
+
+    .resume-header-card {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+
+    .resume-header-meta {
+        justify-content: center;
+    }
+
+    .resume-header-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+
+    .resume-header-actions .btn {
+        width: 100%;
+        text-align: center;
+    }
+
+    /* Dashboard */
+    .dashboard-layout {
+        flex-direction: column;
+    }
+
+    .dashboard-sidebar {
+        width: 100%;
+        height: auto;
+        position: static;
+        border-right: none;
+        border-bottom: 1px solid var(--color-gray-200);
+    }
+
+    .dash-user-panel {
+        display: flex;
+        align-items: center;
+        gap: 16px;
+        text-align: left;
+        padding: 16px 20px;
+    }
+
+    .dash-user-avatar {
+        margin-bottom: 0;
+        flex-shrink: 0;
+    }
+
+    .dash-nav {
+        display: none;
+    }
+
+    .dashboard-sidebar.nav-open .dash-nav {
+        display: block;
+    }
+
+    .dashboard-main {
+        padding: 20px 16px;
+    }
+
+    /* Messages layout */
+    .messages-layout {
+        grid-template-columns: 1fr;
+        height: auto;
+        min-height: unset;
+    }
+
+    .message-list-panel {
+        border-right: none;
+        border-bottom: 1px solid var(--color-gray-200);
+        max-height: 300px;
+    }
+
+    .message-thread-panel {
+        min-height: 400px;
+    }
+
+    /* Form rows */
+    .form-row,
+    .form-row.triple {
+        grid-template-columns: 1fr;
+    }
+
+    /* Stats grid */
+    .dash-stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Table overflow */
+    .dash-table-wrap {
+        overflow-x: auto;
+    }
+
+    /* Stats section */
+    .stats-section .stats-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Categories */
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Company info grid */
+    .company-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Pricing */
+    .packages-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* How it works */
+    .how-it-works-steps {
+        flex-direction: column;
+    }
+}
+
+/* ---- SM: 640px ---- */
+@media (max-width: 640px) {
+    /* Generic card grids */
+    .jobs-grid,
+    .companies-grid,
+    .candidates-grid,
+    .services-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Job card list → full width */
+    .job-card-list {
+        flex-direction: column;
+    }
+
+    .job-card-list .job-logo-wrap {
+        display: none;
+    }
+
+    /* Hero */
+    .hero {
+        padding: 40px 0;
+    }
+
+    .hero .hero-title {
+        font-size: 1.5rem;
+    }
+
+    /* Feature company section */
+    .companies-featured-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    /* Testimonials */
+    .testimonials-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Meeting card */
+    .meeting-card {
+        flex-direction: column;
+    }
+
+    /* Dash stats */
+    .dash-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    /* Pricing header toggle */
+    .pricing-toggle {
+        flex-direction: column;
+    }
+
+    /* Footer widgets */
+    .footer-widgets {
+        grid-template-columns: 1fr;
+    }
+
+    /* Auth pages */
+    .auth-card {
+        margin: 20px;
+        padding: 28px 20px;
+    }
+
+    /* Modals */
+    .modal-dialog {
+        margin: 12px;
+        max-height: calc(100dvh - 24px);
+    }
+}
+
+/* ---- XS: 480px ---- */
+@media (max-width: 480px) {
+    /* Pagination */
+    .pagination .page-numbers:not(.current):not(.prev):not(.next) {
+        display: none;
+    }
+
+    /* Notification dropdown */
+    .notification-dropdown {
+        width: calc(100vw - 20px);
+        left: -50px;
+    }
+
+    /* Category grid */
+    .category-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    /* Company hero */
+    .company-hero-stats {
+        flex-direction: column;
+        gap: 8px;
+    }
+}
+
+/* ---- Touch tap targets ---- */
+@media (pointer: coarse) {
+    .btn,
+    .nav-link,
+    .dash-nav-link,
+    .tab-btn,
+    .message-item {
+        min-height: 44px;
+    }
+
+    .filter-checkbox label {
+        min-height: 36px;
+        display: flex;
+        align-items: center;
+    }
+}
+
+/* ---- Print ---- */
+@media print {
+    .site-header,
+    .site-footer,
+    .filters-sidebar,
+    .dashboard-sidebar,
+    .apply-box,
+    .company-hero-actions {
+        display: none;
+    }
+
+    .resume-page {
+        grid-template-columns: 1fr;
+    }
+
+    .resume-main {
+        max-width: 100%;
+    }
+}

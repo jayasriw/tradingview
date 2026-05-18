@@ -1,0 +1,194 @@
+/**
+ * JobPortal Responsive Styles
+ */
+
+/* Large screens */
+@media (max-width: 1280px) {
+    .container { max-width: 1140px; }
+    .jobs-layout { grid-template-columns: 280px 1fr; }
+    .single-job-layout { grid-template-columns: 1fr 320px; }
+}
+
+/* Tablet landscape */
+@media (max-width: 1024px) {
+    .container { padding: 0 20px; }
+
+    .jobs-layout {
+        grid-template-columns: 1fr;
+    }
+    .filters-sidebar {
+        position: fixed;
+        top: 0;
+        left: -100%;
+        width: 300px;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 1000;
+        transition: left 0.3s ease;
+        border-radius: 0;
+    }
+    .filters-sidebar.open {
+        left: 0;
+    }
+
+    .hero-content { padding: 60px 0; }
+    .hero-title { font-size: 2.5rem; }
+
+    .dash-layout {
+        grid-template-columns: 1fr;
+    }
+    .dash-sidebar {
+        display: none;
+    }
+    .dash-sidebar.open {
+        display: block;
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 280px;
+        height: 100vh;
+        overflow-y: auto;
+        z-index: 1000;
+        box-shadow: 4px 0 24px rgba(0,0,0,0.15);
+    }
+
+    .single-job-layout {
+        grid-template-columns: 1fr;
+    }
+    .single-job-sidebar {
+        order: -1;
+    }
+
+    .footer-widgets {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .packages-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+/* Tablet portrait */
+@media (max-width: 768px) {
+    .primary-nav { display: none; }
+    .mobile-menu-btn { display: flex; }
+    .user-menu-name { display: none; }
+    .header-actions .btn { display: none; }
+    .mobile-menu-btn { display: flex !important; }
+
+    .hero-title { font-size: 2rem; }
+    .hero-subtitle { font-size: 1rem; }
+
+    .search-form {
+        flex-direction: column;
+        border-radius: var(--radius-xl);
+    }
+    .search-divider { display: none; }
+    .search-btn { width: 100%; border-radius: var(--radius-lg) !important; }
+    .search-field { border-right: none !important; }
+
+    .jobs-grid,
+    .companies-grid,
+    .candidates-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .dash-stats-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+
+    .section-header {
+        flex-direction: column;
+        align-items: flex-start;
+        gap: 12px;
+    }
+
+    .single-company-layout,
+    .single-job-layout {
+        grid-template-columns: 1fr;
+    }
+
+    .packages-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .footer-widgets {
+        grid-template-columns: 1fr;
+    }
+
+    .messaging-layout {
+        grid-template-columns: 1fr;
+    }
+    .messaging-sidebar {
+        height: 300px;
+        overflow-y: auto;
+        border-right: none;
+        border-bottom: 1px solid var(--color-gray-200);
+    }
+
+    .map-layout {
+        flex-direction: column;
+    }
+    #map-container {
+        height: 50vh !important;
+    }
+}
+
+/* Mobile */
+@media (max-width: 640px) {
+    .hero-title { font-size: 1.75rem; }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+    }
+
+    .dash-stats-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .job-card-header { flex-direction: row; }
+
+    .btn-lg {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .dash-table-wrap {
+        overflow-x: auto;
+    }
+
+    .modal-dialog {
+        margin: 0;
+        width: 100%;
+        max-width: 100%;
+        min-height: 100vh;
+        border-radius: 0;
+    }
+
+    .filter-group-body {
+        max-height: none;
+    }
+}
+
+/* Small mobile */
+@media (max-width: 480px) {
+    .container { padding: 0 16px; }
+
+    .hero-actions {
+        flex-direction: column;
+        width: 100%;
+    }
+    .hero-actions .btn {
+        width: 100%;
+        justify-content: center;
+    }
+
+    .category-grid {
+        grid-template-columns: repeat(2, 1fr);
+        gap: 10px;
+    }
+
+    .steps-grid {
+        grid-template-columns: 1fr;
+    }
+}

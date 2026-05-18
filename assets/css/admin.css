@@ -1,0 +1,107 @@
+/**
+ * JobPortal Admin Styles
+ */
+
+.jobportal-admin-wrap {
+    max-width: 1200px;
+}
+
+.jobportal-stat-cards {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(180px, 1fr));
+    gap: 16px;
+    margin: 20px 0;
+}
+
+.jobportal-stat-card {
+    background: #fff;
+    border: 1px solid #e5e7eb;
+    border-radius: 8px;
+    padding: 20px;
+    text-align: center;
+}
+
+.jobportal-stat-card .stat-number {
+    font-size: 2rem;
+    font-weight: 800;
+    color: #6366f1;
+    display: block;
+}
+
+.jobportal-stat-card .stat-label {
+    color: #6b7280;
+    font-size: 0.875rem;
+    margin-top: 4px;
+}
+
+.jobportal-meta-box {
+    padding: 12px;
+}
+
+.jobportal-meta-box .form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 12px;
+    margin-bottom: 12px;
+}
+
+.jobportal-meta-box label {
+    display: block;
+    font-weight: 600;
+    margin-bottom: 4px;
+    font-size: 0.8rem;
+    color: #374151;
+}
+
+.jobportal-meta-box input[type="text"],
+.jobportal-meta-box input[type="number"],
+.jobportal-meta-box input[type="url"],
+.jobportal-meta-box input[type="date"],
+.jobportal-meta-box select,
+.jobportal-meta-box textarea {
+    width: 100%;
+    border: 1px solid #d1d5db;
+    border-radius: 4px;
+    padding: 6px 8px;
+    font-size: 0.875rem;
+}
+
+.jobportal-action-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    padding: 4px 10px;
+    border-radius: 4px;
+    font-size: 0.78rem;
+    font-weight: 600;
+    text-decoration: none;
+    border: 1px solid transparent;
+    cursor: pointer;
+    transition: all 0.15s;
+}
+
+.jobportal-action-btn.approve {
+    background: #d1fae5;
+    color: #065f46;
+    border-color: #a7f3d0;
+}
+
+.jobportal-action-btn.reject {
+    background: #fee2e2;
+    color: #991b1b;
+    border-color: #fca5a5;
+}
+
+.jobportal-badge {
+    display: inline-block;
+    padding: 2px 8px;
+    border-radius: 9999px;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+}
+
+.jobportal-badge.pending  { background: #fef3c7; color: #92400e; }
+.jobportal-badge.approved { background: #d1fae5; color: #065f46; }
+.jobportal-badge.rejected { background: #fee2e2; color: #991b1b; }
